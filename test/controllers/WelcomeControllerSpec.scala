@@ -1,0 +1,18 @@
+package controllers
+
+import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneAppPerTest
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{status, _}
+
+class WelcomeControllerSpec extends PlaySpec with GuiceOneAppPerTest {
+
+"WelcomeController GET" should {
+  "return a successful response" in {
+    val Controller = new WelcomeController
+    val result = controller.welcome.apply(FakeRequest())
+    status(result) mustBe OK
+
+    }
+  }
+}
