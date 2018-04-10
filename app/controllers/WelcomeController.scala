@@ -1,9 +1,14 @@
 package controllers
 
-import play.api.mvc.Action
+import com.google.inject.Inject
+import play.api.mvc.{Action, Controller}
+import services._
 
-class WelcomeController extends HomeController {
-def welcome() = Action {
-  Ok
+
+class WelcomeController @Inject()(greeter: GreetingService) extends Controller {
+  def welcome() = Action {
+    val greeting = greeter.greeting
+    Ok(views.html.index(greeting))
   }
+
 }
