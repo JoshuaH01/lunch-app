@@ -1,5 +1,7 @@
 package controllers
 
+import java.util.Calendar
+
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice.GuiceOneAppPerTest
 import play.api.test.FakeRequest
@@ -9,8 +11,25 @@ import services.GreetingService
 
 
 object FakeMorningGreeter extends GreetingService {
-  override def greeting: String = "Good morning!"
+  override def greeting: String = {
+    val currentHour = 11
+    if (currentHour < 12)
+      "Good morning!"
+    else
+      "Good afternoon!"
+  }
 }
+
+object FakeAfternoonGreeter extends GreetingService {
+  override def greeting: String = {
+    val currentHour = 13
+    if (currentHour < 12)
+      "Good morning!"
+    else
+      "Good afternoon!"
+  }
+}
+
 
 class WelcomeControllerSpec extends PlaySpec with GuiceOneAppPerTest {
   "WelcomeController GET" should {
@@ -43,7 +62,7 @@ class WelcomeControllerSpec extends PlaySpec with GuiceOneAppPerTest {
     }
 
     "say good afternoon when it's the afternoon and have a title" in {
-        val controller = new WelcomeController(FakeMorningGreeter)
+        val controller = new WelcomeController(FakeAfternoonGreeter)
         val result = controller.welcome().apply(FakeRequest(GET, "/foo"))
         contentAsString(result) must not include ("<h1>Good morning!</h1>")
         contentAsString(result) must include("<h1>Good afternoon!</h1>")
