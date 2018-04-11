@@ -22,6 +22,6 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action { implicit request =>
-    Ok(views.html.index())
+    Ok(views.html.index(greeting = ""))
   }
 }

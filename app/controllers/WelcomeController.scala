@@ -8,7 +8,7 @@ import services._
 class WelcomeController @Inject()(greeter: GreetingService) extends Controller {
   def welcome() = Action {
     val greeting = greeter.greeting
-    Ok(views.html.index(greeting))
+    Ok(views.html.welcome(greeting))
   }
 
 }
